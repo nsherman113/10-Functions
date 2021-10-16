@@ -116,6 +116,12 @@ const luftHansa = {
   },
 };
 
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
 luftHansa.book(239, 'Noah Sherman');
 luftHansa.book(456, 'Shermain Dupri');
 
@@ -133,6 +139,42 @@ console.log(eurowings);
 book.call(luftHansa, 236, 'Booby Miles');
 console.log(luftHansa);
 
+//  Apply method
+
 const flightData = [583, 'Billy Rae Cyrus'];
 book.apply(eurowings, flightData);
 console.log(eurowings);
+
+book.call(swiss, ...flightData);
+// Bind method
+
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(luftHansa);
+const bookLX = book.bind(swiss);
+bookEW(23, 'Steve Williams');
+
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('Noah Sherman');
+bookEW23('Janet Jackson');
+
+// With Event Listeners
+luftHansa.planes = 300;
+luftHansa.buyPlane = function () {
+  console.log(this);
+  this.plane++;
+  console.log(this.planes);
+};
+
+document
+  .querySelector('.buy')
+  .addEventListener('click', luftHansa.buyPlane.bind(luftHansa));
+
+// Partial application
+
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+
+console.log(addVAT(100));
+console.log(addVAT(23));
