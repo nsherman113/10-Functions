@@ -178,3 +178,37 @@ const addVAT = addTax.bind(null, 0.23);
 
 console.log(addVAT(100));
 console.log(addVAT(23));
+
+//! Immediately Invoked function expression (IIFE)
+
+// Example function (runs more than once)
+const runOnce = function () {
+  console.log('This will never run again');
+};
+runOnce();
+
+// IIFE function
+(function () {
+  console.log('This will never run again');
+})();
+
+(() => console.log('This will not run again as well'))();
+
+// ! Closures
+
+function secureBooking() {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+}
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+
+console.dir(booker);
