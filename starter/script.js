@@ -183,14 +183,12 @@ console.log(addVAT(23));
 
 // Example function (runs more than once)
 const runOnce = function () {
-  console.log('This will never run again');
+  console.log('This will never run again (JK)');
 };
 runOnce();
 
 // IIFE function
-(function () {
-  console.log('This will never run again');
-})();
+(function () {})();
 
 (() => console.log('This will not run again as well'))();
 
@@ -212,3 +210,45 @@ booker();
 booker();
 
 console.dir(booker);
+
+// ! Closures continued
+
+// Example 1
+
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 77;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+g();
+f();
+console.dir(f);
+// Re-assigned by H
+h();
+f();
+console.dir(f);
+
+// Example 2 (TIMER)
+
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will begin boarding in ${wait} seconds`);
+};
+
+boardPassengers(180, 3);
